@@ -20,30 +20,22 @@ function isValidEmail(field) {
   return reg.test(field);
 }
 
+// check if field is required
+function checkRequired(inputArr) {
+  inputArr.forEach(function (input) {
+    if (input.value.trim() === "") {
+      showError(input, `${getFieldName(input)} is required`);
+    } else {
+      showSuccess(input);
+    }
+  });
+}
+function getFieldName(field) {
+  return field.id.charAt(0).toUpperCase() + field.id.slice(1);
+}
 //event listener
 form.addEventListener("submit", function (e) {
   e.preventDefault();
-  if (username.value == "") {
-    showError(username, "Name is required");
-  } else {
-    showSuccess(username);
-  }
-  if (!isValidEmail(email.value)) {
-    showError(email, "Wrong email");
-  } else {
-    showSuccess(email);
-  }
-  if (password.value == "") {
-    showError(password, "Enter password");
-  } else if (password.value.length < 4) {
-    showError(password, "Too short password");
-  } else {
-    showSuccess(password);
-  }
-  if (password.value != password2.value) {
-    showError(password2, "Passwords are not matching");
-  } else {
-    showSuccess(password2);
-  }
+  checkRequired([username, email, password, password2]);
   //console.log(username);
 });
